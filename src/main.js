@@ -5,7 +5,7 @@ import * as path from "node:path";
 import sourceMapSupport from 'source-map-support';
 
 import * as fs from "node:fs";
-import { tap, map, filter } from "rxjs/operators";
+import { tap, map, filter, switchMap } from "rxjs/operators";
 import { Ports } from '@slippi/slippi-js';
 import {
   ConnectionStatus, 
@@ -13,13 +13,19 @@ import {
   SlpRealTime, 
   ComboFilter, 
   generateDolphinQueuePayload,
+  forAllPlayerIndices,
 } from "@vinceau/slp-realtime";
+import { ReplaySubject } from "rxjs";
 
 sourceMapSupport.install();
 
 const ADDRESS = "127.0.0.1";
 const PORT = Ports.DEFAULT;
 const connectionType = "dolphin";
+
+const G = {
+  games: {}
+};
 
 function main() {
   const win = new QMainWindow();
@@ -73,6 +79,13 @@ function main() {
   livestream.start(ADDRESS, PORT)
     .then(() => { label2.setText("Connected to Slippi"); })
     .catch(() => { label2.setText("an error occured"); });
-  console.error("started livestream hopefully")
+  const stream$ = new ReplaySubject();
+  stream$.next(livestream);
+  const frame$ = stream$.pipe(switchMap((stream) => stream.playerFrame$));
+  // frame$.subscribe((frame) => console.error(frame));
+  const start$ = stream$.pipe(switchMap((stream) => stream.gameStart$));
+  const end$ = stream$.pipe(switchMap((stream) => stream.gameEnd$));
+  start$.subscribe((start) => console.error(start));
+  end$.subscribe((end) => console.error(end));
 }
 main();
