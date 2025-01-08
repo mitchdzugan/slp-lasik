@@ -1,9 +1,25 @@
-import { QMainWindow, QWidget, QLabel, QPushButton, QIcon, QBoxLayout, Direction } from '@nodegui/nodegui';
+import { 
+  QMainWindow, QWidget, QLabel, QPushButton, QIcon, QBoxLayout, Direction
+} from '@nodegui/nodegui';
 import * as path from "node:path";
 import sourceMapSupport from 'source-map-support';
 
+import * as fs from "node:fs";
+import { tap, map, filter } from "rxjs/operators";
+import { Ports } from '@slippi/slippi-js';
+import {
+  ConnectionStatus, 
+  SlpLiveStream, 
+  SlpRealTime, 
+  ComboFilter, 
+  generateDolphinQueuePayload,
+} from "@vinceau/slp-realtime";
+
 sourceMapSupport.install();
 
+const ADDRESS = "127.0.0.1";
+const PORT = Ports.DEFAULT;
+const connectionType = "dolphin";
 
 function main() {
   const win = new QMainWindow();
@@ -49,5 +65,14 @@ function main() {
   );
   win.show();
   global.win = win;
+
+  const livestream = new SlpLiveStream(connectionType, {
+    outputFiles: false,
+  });
+
+  livestream.start(ADDRESS, PORT)
+    .then(() => { console.error("Connected to Slippi"); })
+    .catch((e) => { console.error("an error occured", e); });
+  console.error("started livestream hopefully")
 }
 main();
