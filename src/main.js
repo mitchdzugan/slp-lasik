@@ -39,7 +39,7 @@ function main() {
   button.setIcon(new QIcon(path.join(__dirname, '../assets/logox200.png')));
 
   const label2 = new QLabel();
-  label2.setText("World");
+  label2.setText("connecting...");
   label2.setInlineStyle(`
     color: red;
   `);
@@ -71,8 +71,8 @@ function main() {
   });
 
   livestream.start(ADDRESS, PORT)
-    .then(() => { console.error("Connected to Slippi"); })
-    .catch((e) => { console.error("an error occured", e); });
+    .then(() => { label2.setText("Connected to Slippi"); })
+    .catch(() => { label2.setText("an error occured"); });
   console.error("started livestream hopefully")
 }
 main();
