@@ -1,0 +1,22 @@
+{
+  "name": "slp-lasik",
+  "version": "1.0.0",
+  "description": "melee laser watcher",
+  "scripts": {
+    "build": "esbuild src/main.js --sourcemap --bundle --outfile=dist/main.cjs --platform=node --format=cjs --external:@nodegui/nodegui \"--external:nodegui-plugin-*\"",
+    "clean": "rimraf build dist tmp-jam-pack-nodegui",
+    "package": "jam-pack-nodegui --config packaging/jam-pack-nodegui.json",
+    "start": "qode dist/main.cjs"
+  },
+  "author": "mtichdzugan",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.18.4",
+    "jam-pack-nodegui": "^0.18.0",
+    "rimraf": "^5.0.1"
+  },
+  "dependencies": {
+    "@nodegui/nodegui": "^0.61.0",
+    "source-map-support": "^0.5.21"
+  }
+}

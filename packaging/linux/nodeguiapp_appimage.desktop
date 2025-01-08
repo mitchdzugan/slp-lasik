@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=NodeGuiApp
+Exec=slp-lasik
+Terminal=false
+Type=Application
+Comment=melee laser watcher
+Categories=System;X-GNOME-Utilities;
+Icon=nodeguiapp
