@@ -55,7 +55,7 @@
     "skip": false,
     "description": "melee laser watcher",
     "detailColors": "3db54a 000000",
-    "appTitle": "slp lasik",
+    "appTitle": "slp-lasik",
     "installerIcon": "$pruneStep_trashDirectory/packaging/windows/nodeguiapp.ico",
     "uninstallerIcon": "$pruneStep_trashDirectory/packaging/windows/nodeguiapp.ico"
   },
