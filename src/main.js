@@ -507,7 +507,7 @@ function main() {
   fontsizeEdit.edit.addEventListener('editingFinished', () => {
     try {
       const fontsize = parseInt(fontsizeEdit.edit.text());
-      if (fontsize === NaN) { throw new Error(); }
+      if (Number.isNaN(fontsize)) { throw new Error(); }
       G.state.fontsize = fontsize;
       updateView(widgets, G.state);
     } catch (e) {}
